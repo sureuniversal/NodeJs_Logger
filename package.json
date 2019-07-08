@@ -1,0 +1,19 @@
+{
+  "name": "loggerjs",
+  "version": "1.0.0",
+  "description": "Nodejs Package for logging ",
+  "main": "loggerHelper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sureuniversal/NodeJs_logger.git"
+  },
+  "author": "coapp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sureuniversal/NodeJs_logger/issues"
+  },
+  "homepage": "https://github.com/sureuniversal/NodeJs_logger#readme"
+}
