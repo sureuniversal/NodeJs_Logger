@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:sureuniversal/NodeJs_Logger.git"
+    "url": "git+https://github.com/sureuniversal/NodeJs_logger.git"
   },
   "author": "coapp",
   "license": "ISC",
