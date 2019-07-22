@@ -3,7 +3,17 @@ let logger = require('./logger').logger;
 module.exports = class requestLogger {
     constructor(req) {
         req.logger = this;
-        this.correlationID = uuid.v4();
+        let headers = req.headers;
+        let correlationID = headers.correlationid;
+
+        if(correlationID != undefined)
+        {
+            this.correlationID = correlationID;
+        }
+        else
+        {
+            this.correlationID = uuid.v4();
+        }
         
         let bodyStr = '';
         if(req.body)
