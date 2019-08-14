@@ -1,4 +1,4 @@
-let uuid = require('node-uuid');
+let uuid = require('uuid');
 let logger = require('./logger').logger;
 module.exports = class requestLogger {
     constructor(req) {
