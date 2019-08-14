@@ -11,7 +11,8 @@
     "url": "git+https://github.com/sureuniversal/NodeJs_logger.git"
   },
   "dependencies": {
-    "uuid" : "latest"
+    "tracer": "^1.0.0",
+    "uuid": "latest"
   },
   "author": "coapp",
   "license": "ISC",
