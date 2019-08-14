@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/sureuniversal/NodeJs_logger.git"
   },
+  "dependencies": {
+    "uuid" : "latest"
+  },
   "author": "coapp",
   "license": "ISC",
   "bugs": {
