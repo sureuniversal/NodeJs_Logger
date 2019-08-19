@@ -16,6 +16,11 @@ class logger {
        tracer.error(err);      
     }
 
+    static warn(msg)
+    {
+        tracer.warn(msg);
+    }
+
     static debug(msg)
     {
         tracer.debug(msg);

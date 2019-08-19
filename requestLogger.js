@@ -31,6 +31,11 @@ module.exports = class requestLogger {
         logger.error(message);
     }
 
+    warn(msg = "") {
+        var message = this.formatMessage(msg);
+        logger.warn(message);
+    }
+
     debug(msg = "") {
         var message = this.formatMessage(msg);
         logger.debug(message);
