@@ -4,7 +4,7 @@ class logger {
     {
         tracer = require('tracer').console({
             preprocess :  function(data){ data.title = data.title.toUpperCase(); },
-            format : "{{timestamp}} [-1] [{{title}}] {{file}}:{{line}} ({{method}}) {{message}}",       
+            format : "{{timestamp}} [-1] [{{title}}] {{path}}:{{line}} ({{method}}) {{message}}",       
             level: logLevel,
             stackIndex: stackIndex,
             dateformat : "yyyy-mm-dd'T'HH:MM:ss,l"
