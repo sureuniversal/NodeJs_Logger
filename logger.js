@@ -7,8 +7,10 @@ class logger {
             case "dev": 
             case "staging":
                 formatString = "{{timestamp}} [-1] [{{title}}] {{path}}:{{line}} ({{method}}) {{message}}";
+                break;
             default:
                 formatString = "{{timestamp}} [-1] [{{title}}] {{file}}:{{line}} ({{method}}) {{message}}";
+                break;
         }
 
         tracer = require('tracer').console({
