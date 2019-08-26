@@ -2,9 +2,18 @@ let tracer= null;
 class logger {
     constructor(logLevel, stackIndex)
     {
+        let formatString;
+        switch (process.env.RUN_ENV) {
+            case "dev": 
+            case "staging":
+                formatString = "{{timestamp}} [-1] [{{title}}] {{path}}:{{line}} ({{method}}) {{message}}";
+            default:
+                formatString = "{{timestamp}} [-1] [{{title}}] {{file}}:{{line}} ({{method}}) {{message}}";
+        }
+
         tracer = require('tracer').console({
             preprocess :  function(data){ data.title = data.title.toUpperCase(); },
-            format : "{{timestamp}} [-1] [{{title}}] {{path}}:{{line}} ({{method}}) {{message}}",       
+            format : formatString,       
             level: logLevel,
             stackIndex: stackIndex,
             dateformat : "yyyy-mm-dd'T'HH:MM:ss,l"
