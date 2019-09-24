@@ -69,6 +69,12 @@ module.exports = class requestLogger {
         new requestLogger(req);
         next();
     }
+
+    static onInternalRequestRecieved(req, res, next) {
+        let requestLogger = new requestLogger(req);
+        requestLogger.debug("Internal request recieved");
+        next();
+    }
 }
 
 function sanitize(msg)
