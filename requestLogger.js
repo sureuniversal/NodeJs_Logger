@@ -72,7 +72,7 @@ module.exports = class requestLogger {
 
     static onInternalRequestRecieved(req, res, next) {
         let requestLogger = new requestLogger(req);
-        requestLogger.debug("Internal request recieved");
+        requestLogger.debug("Internal request received");
         next();
     }
 }
