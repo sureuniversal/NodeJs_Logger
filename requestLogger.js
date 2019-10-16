@@ -54,8 +54,7 @@ module.exports = class requestLogger {
     formatMessage(msg)
     {
         var messageSanitized = sanitize(msg);
-        var messageStr = JSON.stringify(messageSanitized);     
-        var message = `${this.correlationID} ${messageStr}`;
+        var message = `${this.correlationID} ${messageSanitized}`;
         return message;
     }
 
@@ -81,14 +80,15 @@ function sanitize(msg)
 {
     if(msg instanceof Object)
     {
+        let stringified = JSON.stringify(msg);
         if (msg.password)
         {
             // we need to make sure not to overwrite the original messsage so we clone it
-            var cloned = JSON.parse(JSON.stringify(msg));
+            let cloned = JSON.parse(stringified);
             cloned.password = '*****';
-            return cloned;
+            stringified = JSON.stringify(cloned);            
         }
+        return stringified;
     }
-
     return msg;
 }  
