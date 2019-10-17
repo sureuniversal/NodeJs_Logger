@@ -18,8 +18,7 @@ module.exports = class requestLogger {
         let bodyStr = '';
         if(req.body)
         {
-            var bodySanitized = sanitize(req.body);
-            bodyStr = JSON.stringify(bodySanitized);     
+            bodyStr = sanitize(req.body);
         }
 
         var message = `${this.correlationID} Request recieved for path:${req.originalUrl} httpMethod:'${req.method}' body: ${bodyStr} header: ${JSON.stringify(req.headers)} sourceIp: '${req.connection.remoteAddress}'`;
