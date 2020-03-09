@@ -63,6 +63,7 @@ module.exports = class requestLogger {
 
     // This middleware is used as the first filter in the request pipeline 
     // and is used to setup the request logging mechanism
+    // adds a listner to the response
     static onRequestRecieved(req, res, next) {
         let obj = new requestLogger(req);
         const defaultWrite = res.write;
