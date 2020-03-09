@@ -18,8 +18,7 @@ module.exports = class requestLogger {
         let bodyStr = '';
         if(req.body)
         {
-            var bodySanitized = sanitize(req.body);
-            bodyStr = JSON.stringify(bodySanitized);     
+            bodyStr = sanitize(req.body);
         }
 
         var message = `${this.correlationID} Request recieved for path:${req.originalUrl} httpMethod:'${req.method}' body: ${bodyStr} header: ${JSON.stringify(req.headers)} sourceIp: '${req.connection.remoteAddress}'`;
@@ -54,8 +53,7 @@ module.exports = class requestLogger {
     formatMessage(msg)
     {
         var messageSanitized = sanitize(msg);
-        var messageStr = JSON.stringify(messageSanitized);     
-        var message = `${this.correlationID} ${messageStr}`;
+        var message = `${this.correlationID} ${messageSanitized}`;
         return message;
     }
 
@@ -66,13 +64,36 @@ module.exports = class requestLogger {
     // This middleware is used as the first filter in the request pipeline 
     // and is used to setup the request logging mechanism
     static onRequestRecieved(req, res, next) {
-        new requestLogger(req);
+        let obj = new requestLogger(req);
+        const defaultWrite = res.write;
+        const defaultEnd = res.end;
+        const chunks = [];
+      
+        res.write = (...restArgs) => {
+          chunks.push(new Buffer(restArgs[0]));
+          defaultWrite.apply(res, restArgs);
+        };
+      
+        res.end = (...restArgs) => {
+          if (restArgs[0]) {
+            chunks.push(new Buffer(restArgs[0]));
+          }
+
+          const body = Buffer.concat(chunks).toString('utf8');
+          requestLogger.onResponseSent(obj, body);
+          defaultEnd.apply(res, restArgs);
+        };
+      
         next();
     }
 
+    static onResponseSent(obj, body) {
+        obj.debug(`Response body: ${body}`);
+    }
+
     static onInternalRequestRecieved(req, res, next) {
-        let requestLogger = new requestLogger(req);
-        requestLogger.debug("Internal request received");
+        let requestLoggerObj = new requestLogger(req);
+        requestLoggerObj.debug("Internal request received");
         next();
     }
 }
@@ -81,14 +102,15 @@ function sanitize(msg)
 {
     if(msg instanceof Object)
     {
+        let stringified = JSON.stringify(msg);
         if (msg.password)
         {
             // we need to make sure not to overwrite the original messsage so we clone it
-            var cloned = JSON.parse(JSON.stringify(msg));
+            let cloned = JSON.parse(stringified);
             cloned.password = '*****';
-            return cloned;
+            stringified = JSON.stringify(cloned);            
         }
+        return stringified;
     }
-
     return msg;
 }  
