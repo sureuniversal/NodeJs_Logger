@@ -39,7 +39,8 @@ class logger {
 
     static info(msg)
     {
-        tracer.info(msg);
+        const RegExpToRemove = new RegExp("(\\n)|(\\t)|(\\r)", "g"); 
+        tracer.info(msg.replace(RegExpToRemove, ''));
     }
 
     static verbose(msg)
